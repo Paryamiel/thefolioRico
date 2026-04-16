@@ -1,0 +1,91 @@
+/* =========================================
+   STUDENT PORTFOLIO: GLOBAL STYLES 
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+:root {
+  --green: #2f6b3f;
+  --accent: #fbff00;
+  --bg: #f0f2f5;
+  --text: #1e1e1e;
+  --white: #ffffff;
+  --card-bg: #ffffff;
+  --input-bg: #ffffff;
+  --error: #ff4d4d;
+}
+
+[data-theme="dark"] {
+  --bg: #121212; 
+  --text: #e0e0e0; 
+  --white: #1e1e1e; 
+  --green: #4caf50;
+  --card-bg: #2d2d2d;
+  --input-bg: #333333;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { 
+  font-family: 'Montserrat', sans-serif; 
+  background-color: var(--bg); 
+  color: var(--text); 
+  line-height: 1.8; 
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+/* --- SPLASH SCREEN --- */
+#splash-screen {
+  position: fixed; inset: 0; background: linear-gradient(135deg, var(--green), #1a3d25); 
+  z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; transition: opacity 0.5s ease;
+}
+.loader { width: 150px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.loader::after { content: ""; display: block; width: 100%; height: 100%; background: var(--accent); transform: translateX(-100%); animation: paint 1.2s infinite; }
+@keyframes paint { 100% { transform: translateX(100%); } }
+
+/* --- NAVIGATION --- */
+.site-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: var(--card-bg); border-bottom: 4px solid var(--green); position: sticky; top: 0; z-index: 1000; transition: background-color 0.3s; }
+.nav-link { text-decoration: none; color: var(--text); font-weight: bold; padding: 8px 15px; border-radius: 8px; transition: 0.3s; }
+.nav-link.active { background: var(--green); color: white; }
+.btn { background: var(--green); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; transition: 0.3s; }
+.btn:hover { background: var(--accent); color: black; }
+
+/* --- LAYOUT --- */
+.page { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+.card, .hero, .section { background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 30px; transition: background-color 0.3s; }
+.hero { display: flex; align-items: center; gap: 40px; }
+.hero-image img { width: 100%; max-width: 350px; border-radius: 15px; border: 4px solid var(--green); }
+
+/* --- FORMS & VALIDATION --- */
+.form-row { margin-bottom: 15px; }
+label { display: block; font-weight: bold; margin-bottom: 5px; }
+
+/* General inputs take full width */
+input, select, textarea { 
+  width: 100%; padding: 12px; border-radius: 8px; 
+  border: 1px solid #ccc; background: var(--input-bg); color: var(--text); 
+}
+
+/* FIX: Checkbox and Radio buttons should NOT be full width */
+input[type="checkbox"], input[type="radio"] {
+  width: auto; 
+  display: inline-block; 
+  margin-right: 10px;
+}
+
+.input-error { border: 2px solid var(--error) !important; background-color: #fff2f2 !important; }
+[data-theme="dark"] .input-error { background-color: #5c2b2b !important; border-color: #ff6b6b !important; }
+
+/* --- EXTRAS --- */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { padding: 12px; border: 1px solid #555; text-align: left; }
+th { background-color: var(--green); color: white; }
+a { color: var(--green); text-decoration: none; font-weight: bold; }
+a:hover { text-decoration: underline; }
+
+iframe { width: 100%; height: 300px; border: 0; border-radius: 10px; }
+#pacmanCanvas { background: black; border-radius: 10px; display: block; margin: 0 auto; max-width: 100%; border: 4px solid var(--green); }
+
+@media (max-width: 850px) { .hero { flex-direction: column; text-align: center; } .site-header { flex-direction: column; gap: 10px; } }
+footer { text-align: center; padding: 40px; background: var(--card-bg); border-top: 4px solid var(--green); transition: background-color 0.3s; }

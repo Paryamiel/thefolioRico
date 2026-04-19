@@ -14,7 +14,6 @@ function Community() {
   const fetchPosts = async () => {
     try {
       const response = await API.get('/posts');
-      // FIX: Removed .reverse() because the backend is already sorting it perfectly!
       setPosts(response.data); 
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -48,18 +47,15 @@ function Community() {
     }
 
     try {
-      const token = localStorage.getItem('token');
-      await API.post('/posts', postData), {
+      await API.post('/posts', postData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`
         }
-      };
+      });
 
       setFormData({ title: '', description: '' });
       setImageFile(null);
       
-      // Reset the file input visually
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = '';
 
@@ -77,10 +73,7 @@ function Community() {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
 
     try {
-      const token = localStorage.getItem('token');
-      await API.delete(`/posts/${postId}`), {
-        headers: { 'Authorization': `Bearer ${token}` }
-      };
+      await API.delete(`/posts/${postId}`);
       setPosts(posts.filter(post => post._id !== postId));
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -121,7 +114,6 @@ function Community() {
               ></textarea>
             </div>
             
-            {/* OPTION A: Only show the image upload if the user is an Admin! */}
             {user.role === 'Admin' && (
               <div className="form-row" style={{ marginBottom: '10px' }}>
                 <label style={{ fontSize: '0.9em', color: '#555' }}>Attach an Image (Admin Only):</label><br/>

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import API from '../api';
 
 function Profile() {
   const { user, login } = useContext(AuthContext); 
@@ -44,12 +45,9 @@ function Profile() {
     try {
       const token = localStorage.getItem('token'); 
       
-      const response = await axios.put('http://localhost:5000/api/auth/profile', updateData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}` 
-        }
-      });
+      const response = await API.put('/auth/profile', updateData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+     });
 
       setIsError(false);
       setStatusMessage('Profile updated successfully!');
@@ -89,8 +87,8 @@ function Profile() {
           {user.profilePicture ? (
             <img 
               src={user.profilePicture.startsWith('/') 
-                ? `http://localhost:5000${user.profilePicture}` 
-                : `http://localhost:5000/${user.profilePicture}`} 
+                ? `${user.profilePicture}` 
+                : `${user.profilePicture}`} 
               alt="Profile" 
               style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--green)' }} 
             />

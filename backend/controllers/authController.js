@@ -87,7 +87,7 @@ exports.login = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
   try {
     // Security check: Only Admins can do this
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'Admin') {
       return res.status(403).json({ message: 'Access denied. Admins only.' });
     }
     
@@ -102,7 +102,7 @@ exports.getAllUsers = async (req, res) => {
 // --- DELETE A USER --- (Admin Only)
 exports.deleteUser = async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'Admin') {
       return res.status(403).json({ message: 'Access denied. Admins only.' });
     }
 

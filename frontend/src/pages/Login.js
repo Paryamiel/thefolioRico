@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'; // <-- Added useContext
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // <-- Added useNavigate
 import { AuthContext } from '../context/AuthContext';
+import API from '../api';
 
 function Login() {
   const { login } = useContext(AuthContext); // <-- Extract login function from Context
@@ -28,7 +29,7 @@ function Login() {
 
     try {
       // Send POST request to your Express server's login route
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await API.post('/auth/login', {
         email: formData.email,
         password: formData.password
       });

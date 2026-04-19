@@ -44,7 +44,7 @@ exports.deleteComment = async (req, res) => {
     if (!comment) return res.status(404).json({ message: 'Comment not found' });
 
     // Check if user is the author OR an Admin
-    if (comment.author.toString() !== (req.user.id || req.user._id).toString() && req.user.role !== 'admin') {
+    if (comment.author.toString() !== (req.user.id || req.user._id).toString() && req.user.role !== 'Admin') {
       return res.status(403).json({ message: 'Not authorized to delete this comment.' });
     }
 
@@ -58,7 +58,7 @@ exports.deleteComment = async (req, res) => {
 // --- GET ALL COMMENTS GLOBALLY --- (Admin Only)
 exports.getAllComments = async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'Admin') {
       return res.status(403).json({ message: 'Access denied. Admins only.' });
     }
     

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // <-- 1. Import axios for API requests
+import API from '../api';
 
 function Register() {
   // 1. Single state object for all form fields
@@ -67,8 +68,8 @@ function Register() {
     if (isValid) {
       try {
         // Send POST request to your Express server
-        const response = await axios.post('http://localhost:5000/api/auth/register', {
-          fullname: formData.fullname,
+        const response = await API.post('/auth/register', {
+          name: formData.fullname,
           email: formData.email,
           password: formData.password,
           role: 'Member' // Defaulting the role to Member

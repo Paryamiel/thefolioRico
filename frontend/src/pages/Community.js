@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import PostCard from '../components/PostCard';
 import { AuthContext } from '../context/AuthContext';
+import API from '../api';
 
 function Community() {
   const { user } = useContext(AuthContext);
@@ -13,7 +14,7 @@ function Community() {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/posts');
+      const response = await await API.get('/posts');
       // FIX: Removed .reverse() because the backend is already sorting it perfectly!
       setPosts(response.data); 
     } catch (error) {
@@ -49,12 +50,12 @@ function Community() {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/posts', postData, {
+      await await API.post('/posts', postData), {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
         }
-      });
+      };
 
       setFormData({ title: '', description: '' });
       setImageFile(null);
@@ -78,9 +79,9 @@ function Community() {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/posts/${postId}`, {
+      await await API.delete(`/posts/${postId}`), {
         headers: { 'Authorization': `Bearer ${token}` }
-      });
+      };
       setPosts(posts.filter(post => post._id !== postId));
     } catch (error) {
       console.error("Error deleting post:", error);

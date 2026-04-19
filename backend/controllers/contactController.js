@@ -15,7 +15,7 @@ exports.submitContact = async (req, res) => {
 // --- GET ALL MESSAGES --- (Admin Only)
 exports.getContacts = async (req, res) => {
   try {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Access denied.' });
+    if (req.user.role !== 'Admin') return res.status(403).json({ message: 'Access denied.' });
     const contacts = await Contact.find().sort({ createdAt: -1 });
     res.status(200).json(contacts);
   } catch (error) {
@@ -26,7 +26,7 @@ exports.getContacts = async (req, res) => {
 // --- DELETE A MESSAGE --- (Admin Only)
 exports.deleteContact = async (req, res) => {
   try {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Access denied.' });
+    if (req.user.role !== 'Admin') return res.status(403).json({ message: 'Access denied.' });
     await Contact.findByIdAndDelete(req.params.id);
     res.status(200).json({ message: 'Message deleted.' });
   } catch (error) {

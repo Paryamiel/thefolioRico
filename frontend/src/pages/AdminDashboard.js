@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import API from '../api';
 
 function AdminDashboard() {
   const { user } = useContext(AuthContext);
@@ -19,7 +20,7 @@ function AdminDashboard() {
   // Fetch data based on the active tab
   useEffect(() => {
     // Security redirect: Kick out anyone who isn't an Admin!
-    if (!user || user.role !== 'admin') {
+    if (!user || user.role !== 'Admin') {
       navigate('/');
       return;
     }
@@ -30,16 +31,16 @@ function AdminDashboard() {
 
       try {
         if (activeTab === 'users') {
-          const res = await axios.get('http://localhost:5000/api/auth', config);
+          const res = await API.get('/auth' , config);
           setUsers(res.data);
         } else if (activeTab === 'posts') {
-          const res = await axios.get('http://localhost:5000/api/posts');
+          const res = await API.get('/posts');
           setPosts(res.data);
         } else if (activeTab === 'comments') {
-          const res = await axios.get('http://localhost:5000/api/comments', config);
+          const res = await API.get('/comments', config);
           setComments(res.data);
         } else if (activeTab === 'contacts') {
-          const res = await axios.get('http://localhost:5000/api/contacts', config);
+          const res = await API.get('/contacts', config);
           setContacts(res.data);
         }
       } catch (error) {
@@ -55,7 +56,7 @@ function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this account?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/auth/${id}`, {
+      await API.delete(`/auth/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setUsers(users.filter(u => u._id !== id));
@@ -66,7 +67,7 @@ function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+      await API.delete(`/posts/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setPosts(posts.filter(p => p._id !== id));
@@ -77,7 +78,7 @@ function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this comment?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/comments/${id}`, {
+      await API.delete(`/comments/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setComments(comments.filter(c => c._id !== id));
@@ -88,7 +89,7 @@ function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this message?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/contacts/${id}`, {
+      await API.delete(`/contacts/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       setContacts(contacts.filter(c => c._id !== id));
@@ -129,7 +130,7 @@ function AdminDashboard() {
                   <td style={tdStyle}>{u.email}</td>
                   <td style={tdStyle}><strong>{u.role}</strong></td>
                   <td style={tdStyle}>
-                    {u.role !== 'admin' && <button style={delBtnStyle} onClick={() => handleDeleteUser(u._id)}>Delete</button>}
+                    {u.role !== 'Admin' && <button style={delBtnStyle} onClick={() => handleDeleteUser(u._id)}>Delete</button>}
                   </td>
                 </tr>
               ))}

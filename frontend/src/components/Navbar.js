@@ -32,7 +32,7 @@ function Navbar() {
         {user ? (
           <>
             {/* Admin Dashboard Link - Only shows for Admins */}
-            {user.role === 'admin' && (
+            {user.role === 'Admin' && (
               <Link className="nav-link" to="/admin" style={{ color: 'var(--green, #4CAF50)', fontWeight: 'bold' }}>
                 Admin Dashboard
               </Link>

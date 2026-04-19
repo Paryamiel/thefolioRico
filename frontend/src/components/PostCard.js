@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import API from '../api';
 
 function PostCard({ post, handleDelete }) {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ function PostCard({ post, handleDelete }) {
   const fetchComments = async () => {
     setIsLoadingComments(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/comments/${post._id}`);
+      const response = await API.get(`/comments/${post._id}`);
       setComments(response.data);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -40,8 +41,8 @@ function PostCard({ post, handleDelete }) {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(
-        'http://localhost:5000/api/comments',
+      const response = await API.post(
+        '/comments',
         { text: newComment, postId: post._id },
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
@@ -60,7 +61,7 @@ function PostCard({ post, handleDelete }) {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/comments/${commentId}`, {
+      await API.delete(`/comments/${commentId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -79,7 +80,7 @@ function PostCard({ post, handleDelete }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           {post.author && post.author.profilePicture ? (
             <img 
-              src={post.author.profilePicture.startsWith('/') ? `http://localhost:5000${post.author.profilePicture}` : `http://localhost:5000/${post.author.profilePicture}`} 
+              src={post.author.profilePicture.startsWith('/') ? `${post.author.profilePicture}` : `${post.author.profilePicture}`} 
               alt="Author" 
               style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
             />
@@ -99,7 +100,7 @@ function PostCard({ post, handleDelete }) {
       {post.image && (
         <div style={{ marginTop: '15px', textAlign: 'center' }}>
           <img 
-            src={post.image.startsWith('/') ? `http://localhost:5000${post.image}` : `http://localhost:5000/${post.image}`} 
+            src={post.image.startsWith('/') ? `${post.image}` : `${post.image}`} 
             alt="Post" 
             style={{ maxWidth: '100%', borderRadius: '8px', maxHeight: '400px', objectFit: 'cover' }}
           />
@@ -161,7 +162,7 @@ function PostCard({ post, handleDelete }) {
                     {/* Comment Author Pic */}
                     {comment.author && comment.author.profilePicture ? (
                       <img 
-                        src={comment.author.profilePicture.startsWith('/') ? `http://localhost:5000${comment.author.profilePicture}` : `http://localhost:5000/${comment.author.profilePicture}`} 
+                        src={comment.author.profilePicture.startsWith('/') ? `${comment.author.profilePicture}` : `${comment.author.profilePicture}`} 
                         alt="Author" 
                         style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }}
                       />

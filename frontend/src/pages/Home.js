@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PostCard from '../components/PostCard';
+import API from '../api';
 
 function Home() {
   const canvasRef = useRef(null);
@@ -14,7 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/posts');
+        const response = await API.get('/posts');
         // Grab only the 3 most recent posts to show on the homepage
         setBlogPosts(response.data.slice(0, 3)); 
       } catch (error) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // <-- 1. Import axios to talk to the backend
+import API from '../api'; // <-- 2. Import our custom API module for cleaner requests
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ function Contact() {
 
     try {
       // 3. Send the actual data to our backend database!
-      await axios.post('http://localhost:5000/api/contacts', formData);
+      await API.post('/contacts', formData);
 
       // If successful:
       setIsError(false);

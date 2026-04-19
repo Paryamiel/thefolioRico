@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import PostCard from '../components/PostCard';
 import { AuthContext } from '../context/AuthContext';
 import API from '../api';
@@ -14,7 +13,7 @@ function Community() {
 
   const fetchPosts = async () => {
     try {
-      const response = await await API.get('/posts');
+      const response = await API.get('/posts');
       // FIX: Removed .reverse() because the backend is already sorting it perfectly!
       setPosts(response.data); 
     } catch (error) {
@@ -50,7 +49,7 @@ function Community() {
 
     try {
       const token = localStorage.getItem('token');
-      await await API.post('/posts', postData), {
+      await API.post('/posts', postData), {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
@@ -79,7 +78,7 @@ function Community() {
 
     try {
       const token = localStorage.getItem('token');
-      await await API.delete(`/posts/${postId}`), {
+      await API.delete(`/posts/${postId}`), {
         headers: { 'Authorization': `Bearer ${token}` }
       };
       setPosts(posts.filter(post => post._id !== postId));
